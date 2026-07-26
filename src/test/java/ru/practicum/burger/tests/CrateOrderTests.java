@@ -1,18 +1,19 @@
-package practicum.burgerTests;
+package ru.practicum.burger.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import org.junit.After;
 import org.junit.Test;
-import practicum.pojo.CreateOrder;
-import practicum.pojo.CreateUser;
-import practicum.steps.OrderSteps;
+import ru.practicum.pojo.CreateOrder;
+import ru.practicum.pojo.CreateUser;
+import ru.practicum.steps.OrderSteps;
 import io.restassured.response.Response;
-import practicum.steps.UserSteps;
+import ru.practicum.steps.UserSteps;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.apache.http.HttpStatus.*;
 
 public class CrateOrderTests extends BaseTest{
     private final OrderSteps orderSteps = new OrderSteps();
@@ -34,7 +35,7 @@ public class CrateOrderTests extends BaseTest{
         CreateOrder order = new CreateOrder(List.of("61c0c5a71d1f82001bdaaa6d", "61c0c5a71d1f82001bdaaa70"));
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("name", notNullValue())
                 .body("order.number", notNullValue())
                 .body("success", equalTo(true));
@@ -50,7 +51,7 @@ public class CrateOrderTests extends BaseTest{
         authToken = firstResponse.path("accessToken");
         Response response = orderSteps.createOrderWithAuth(order, authToken);
         response.then()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("name", notNullValue())
                 .body("order.number", notNullValue())
                 .body("success", equalTo(true));
@@ -63,7 +64,7 @@ public class CrateOrderTests extends BaseTest{
         CreateOrder order = new CreateOrder(List.of("1h2nrkdsm231lmfdj5f9ds57"));
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(500);
+                .statusCode(SC_INTERNAL_SERVER_ERROR);
     }
 
     @Test
@@ -73,7 +74,7 @@ public class CrateOrderTests extends BaseTest{
         CreateOrder order = new CreateOrder(List.of());
         Response response = orderSteps.createOrder(order);
         response.then()
-                .statusCode(400)
+                .statusCode(SC_BAD_REQUEST)
                 .body("success", equalTo(false))
                 .body("message", equalTo("Ingredient ids must be provided"));
     }

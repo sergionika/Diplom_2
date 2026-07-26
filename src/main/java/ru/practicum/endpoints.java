@@ -1,4 +1,4 @@
-package practicum;
+package ru.practicum;
 
 public class endpoints {
     public static final String pointCreateUser = "api/auth/register";

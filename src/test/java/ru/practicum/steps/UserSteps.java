@@ -1,12 +1,12 @@
-package practicum.steps;
+package ru.practicum.steps;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import practicum.pojo.CreateUser;
-import practicum.pojo.LoginUser;
+import ru.practicum.pojo.CreateUser;
+import ru.practicum.pojo.LoginUser;
 
 import static io.restassured.RestAssured.given;
-import static practicum.endpoints.*;
+import static ru.practicum.endpoints.*;
 
 public class UserSteps {
 

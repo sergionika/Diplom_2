@@ -1,4 +1,4 @@
-package practicum.pojo;
+package ru.practicum.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

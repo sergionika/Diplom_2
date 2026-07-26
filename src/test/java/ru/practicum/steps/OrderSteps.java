@@ -1,14 +1,14 @@
-package practicum.steps;
+package ru.practicum.steps;
 
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import practicum.pojo.CreateOrder;
+import ru.practicum.pojo.CreateOrder;
 
 import static io.restassured.RestAssured.given;
 
 public class OrderSteps {
 
-    @Step
+    @Step("Создать заказ авторизованным пользоватлем")
     public Response createOrder(CreateOrder order) {
         return given()
                 .header("Content-type", "application/json")
@@ -17,7 +17,7 @@ public class OrderSteps {
                 .post("/api/orders");
     }
 
-    @Step
+    @Step("Создать заказ без авторизации")
     public Response createOrderWithAuth(CreateOrder order, String accessToken) {
         return given()
                 .header("Content-type", "application/json")

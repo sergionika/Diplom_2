@@ -1,4 +1,4 @@
-package practicum.burgerTests;
+package ru.practicum.burger.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -7,10 +7,11 @@ import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import practicum.pojo.CreateUser;
-import practicum.steps.UserSteps;
+import ru.practicum.pojo.CreateUser;
+import ru.practicum.steps.UserSteps;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.apache.http.HttpStatus.*;
 
 @RunWith(Parameterized.class)
 public class CreateUserRequiredFieldsTests extends BaseTest{
@@ -44,7 +45,7 @@ public class CreateUserRequiredFieldsTests extends BaseTest{
         Response response = userSteps.createUser(user);
         tokenForDelete = response.path("accessToken");
         response.then()
-                .statusCode(403)
+                .statusCode(SC_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("Email, password and name are required fields"));
     }

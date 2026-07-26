@@ -1,4 +1,4 @@
-package practicum.burgerTests;
+package ru.practicum.burger.tests;
 
 import io.restassured.RestAssured;
 import org.junit.Before;

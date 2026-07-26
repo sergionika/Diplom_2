@@ -1,4 +1,4 @@
-package practicum.burgerTests;
+package ru.practicum.burger.tests;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
@@ -6,12 +6,13 @@ import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import practicum.pojo.CreateUser;
-import practicum.pojo.LoginUser;
-import practicum.steps.UserSteps;
+import ru.practicum.pojo.CreateUser;
+import ru.practicum.pojo.LoginUser;
+import ru.practicum.steps.UserSteps;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.apache.http.HttpStatus.*;
 
 public class AuthorizationUserTests extends BaseTest{
     private CreateUser user;
@@ -41,7 +42,7 @@ public class AuthorizationUserTests extends BaseTest{
     public void checkAuthCorrectUser(){
         Response response = userSteps.authUser(loginUser);
         response.then()
-                .statusCode(200)
+                .statusCode(SC_OK)
                 .body("success", equalTo(true))
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
@@ -56,7 +57,7 @@ public class AuthorizationUserTests extends BaseTest{
         loginUser.setEmail("notCorrecteEmail@yandex.cooooom");
         Response response = userSteps.authUser(loginUser);
         response.then()
-                .statusCode(401)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
     }
@@ -68,7 +69,7 @@ public class AuthorizationUserTests extends BaseTest{
         loginUser.setPassword("неправильный_пароль");
         Response response = userSteps.authUser(loginUser);
         response.then()
-                .statusCode(401)
+                .statusCode(SC_UNAUTHORIZED)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
     }
